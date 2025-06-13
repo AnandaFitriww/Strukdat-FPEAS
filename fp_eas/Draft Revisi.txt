@@ -1,0 +1,5 @@
+1. Tidak ada fitur melihat database buku keseluruhan (nampilin semua buku yang ada di perpustakaan)
+2. Hasil search kasih ISBN juga
+3. 5 Kasih opsi liat genre apa aja yang tersedia
+4. 6 Rekomendasinya berdasar jumlah history peminjaman buku dengan kesamaan genre/author
+5. Urutan menu: Tampilkan database, Search Book, Show Book by Genre, borrow, return, undo, recom, exit
