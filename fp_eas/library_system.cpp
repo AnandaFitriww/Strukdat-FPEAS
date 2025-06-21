@@ -6,7 +6,13 @@
 #include <queue>
 #include <stack>
 #include <map>
+#include <set>
 #include <algorithm>
+#include <random>
+#include <ctime>
+#include <thread>
+#include <chrono>
+#include <unistd.h>
 
 using namespace std;
 
@@ -58,10 +64,11 @@ public:
     }
 };
 
-// Global structures
 GenreNode* rootGenre = new GenreNode("Library");
 map<string, Book*> isbnMap;
 map<string, Book*> titleMap;
+map<string, GenreNode*> genreMap;
+map<string, int> genreScore, authorScore;
 queue<Book*> borrowQueue;
 queue<Book*> returnQueue;
 stack<Action> actionHistory;
@@ -86,62 +93,61 @@ void loadBooksFromFile(string filename) {
         if (!node) {
             node = new GenreNode(genre);
             rootGenre->addSubGenre(node);
+            genreMap[genre] = node;
         }
         node->addBook(book);
     }
-
     cout << "Books loaded from " << filename << "\n";
 }
 
-void borrowBook() {
-    string isbn;
-    cout << "Enter ISBN to borrow: ";
-    cin >> isbn;
-
-    if (isbnMap.find(isbn) != isbnMap.end()) {
-        Book* book = isbnMap[isbn];
-        if (book->isAvailable) {
-            book->isAvailable = false;
-            borrowQueue.push(book);
-            actionHistory.push({ BORROW, book });
-            cout << "Book borrowed: " << book->title << "\n";
-        } else {
-            cout << "Book is already borrowed.\n";
-        }
-    } else {
-        cout << "Book not found.\n";
+void showAllBooks() {
+    cout << "\nAll Books in Library (sorted by ISBN):\n";
+    vector<pair<string, Book*>> sortedBooks(isbnMap.begin(), isbnMap.end());
+    sort(sortedBooks.begin(), sortedBooks.end());
+    for (auto& pair : sortedBooks) {
+        Book* b = pair.second;
+        cout << b->isbn << " - " << b->title << " by " << b->author
+             << " [" << (b->isAvailable ? "Available" : "Borrowed") << "]\n";
     }
 }
 
-void returnBook() {
-    string isbn;
-    cout << "Enter ISBN to return: ";
-    cin >> isbn;
+Book* getBookInput(string action) {
+    cout << action << " by (1) ISBN or (2) Title? ";
+    int opt; cin >> opt; cin.ignore();
+    string input;
+    cout << "Enter value: "; getline(cin, input);
+    if (opt == 1 && isbnMap.count(input)) return isbnMap[input];
+    if (opt == 2 && titleMap.count(input)) return titleMap[input];
+    return nullptr;
+}
 
-    if (isbnMap.find(isbn) != isbnMap.end()) {
-        Book* book = isbnMap[isbn];
-        if (!book->isAvailable) {
-            book->isAvailable = true;
-            returnQueue.push(book);
-            actionHistory.push({ RETURN, book });
-            cout << "Book returned: " << book->title << "\n";
-        } else {
-            cout << "Book is already available.\n";
-        }
-    } else {
-        cout << "Book not found.\n";
-    }
+void borrowBook() {
+    Book* book = getBookInput("Borrow");
+    if (!book) { cout << "Book not found.\n"; return; }
+    if (!book->isAvailable) { cout << "Book is already borrowed.\n"; return; }
+    book->isAvailable = false;
+    borrowQueue.push(book);
+    actionHistory.push({ BORROW, book });
+    genreScore[book->genre]++;
+    authorScore[book->author]++;
+    cout << "Book borrowed: " << book->title << "\n";
+}
+
+void returnBook() {
+    Book* book = getBookInput("Return");
+    if (!book) { cout << "Book not found.\n"; return; }
+    if (book->isAvailable) { cout << "Book is already available.\n"; return; }
+    book->isAvailable = true;
+    returnQueue.push(book);
+    actionHistory.push({ RETURN, book });
+    cout << "Book returned: " << book->title << "\n";
 }
 
 void undoLastAction() {
     if (actionHistory.empty()) {
-        cout << "No actions to undo.\n";
-        return;
+        cout << "No actions to undo.\n"; return;
     }
-
-    Action last = actionHistory.top();
-    actionHistory.pop();
-
+    Action last = actionHistory.top(); actionHistory.pop();
     if (last.type == BORROW) {
         last.book->isAvailable = true;
         cout << "Undo: Book returned (" << last.book->title << ")\n";
@@ -152,80 +158,92 @@ void undoLastAction() {
 }
 
 void searchBook() {
-    string input;
-    cout << "Search by (1) ISBN or (2) Title: ";
-    int opt; cin >> opt;
-
-    cout << "Enter keyword: ";
-    cin.ignore(); getline(cin, input);
-
-    if (opt == 1 && isbnMap.find(input) != isbnMap.end()) {
-        Book* b = isbnMap[input];
-        cout << b->title << " by " << b->author << " ["
-             << (b->isAvailable ? "Available" : "Borrowed") << "]\n";
-    } else if (opt == 2 && titleMap.find(input) != titleMap.end()) {
-        Book* b = titleMap[input];
-        cout << b->title << " by " << b->author << " ["
-             << (b->isAvailable ? "Available" : "Borrowed") << "]\n";
-    } else {
-        cout << "Book not found.\n";
-    }
+    Book* book = getBookInput("Search");
+    if (!book) { cout << "Book not found.\n"; return; }
+    cout << book->title << " by " << book->author
+         << " (ISBN: " << book->isbn << ") ["
+         << (book->isAvailable ? "Available" : "Borrowed") << "]\n";
 }
 
 void showBooksByGenre() {
-    string g;
-    cout << "Enter genre to view: ";
-    cin.ignore(); getline(cin, g);
-
-    GenreNode* node = rootGenre->findGenre(g);
-    if (node) {
-        cout << "Books in genre '" << g << "':\n";
-        node->displayBooks();
+    cout << "\n1. List available genres\n2. View books by genre\nChoice: ";
+    int opt; cin >> opt; cin.ignore();
+    if (opt == 1) {
+        cout << "Available Genres:\n";
+        for (auto& pair : genreMap)
+            cout << "- " << pair.first << "\n";
     } else {
-        cout << "Genre not found.\n";
+        cout << "Enter genre: ";
+        string g; getline(cin, g);
+        GenreNode* node = rootGenre->findGenre(g);
+        if (node) node->displayBooks();
+        else cout << "Genre not found.\n";
     }
 }
 
 void recommendBooks() {
-    string g;
-    cout << "Enter preferred genre: ";
-    cin.ignore(); getline(cin, g);
+    if (genreScore.empty() && authorScore.empty()) {
+        // show random 3 books
+        cout << "No history found. Showing random recommendations:\n";
+        vector<Book*> allBooks;
+        for (auto& pair : isbnMap)
+            if (pair.second->isAvailable) allBooks.push_back(pair.second);
+        shuffle(allBooks.begin(), allBooks.end(), default_random_engine(time(0)));
+        for (int i = 0; i < min(3, (int)allBooks.size()); ++i) {
+            Book* b = allBooks[i];
+            cout << "- " << b->title << " by " << b->author << " (" << b->isbn << ")\n";
+        }
+        return;
+    }
 
-    GenreNode* node = rootGenre->findGenre(g);
-    if (node) {
-        cout << "Recommended books in genre '" << g << "':\n";
-        node->displayBooks();
-    } else {
-        cout << "No recommendations available.\n";
+    map<Book*, int> score;
+    for (auto& pair : isbnMap) {
+        Book* b = pair.second;
+        if (!b->isAvailable) continue;
+        score[b] = genreScore[b->genre] + authorScore[b->author];
+    }
+    vector<pair<int, Book*>> ranked;
+    for (auto& pair : score)
+        ranked.push_back({ pair.second, pair.first });
+    sort(ranked.rbegin(), ranked.rend());
+    cout << "Recommended books:\n";
+    for (int i = 0; i < min(3, (int)ranked.size()); ++i) {
+        Book* b = ranked[i].second;
+        cout << "- " << b->title << " by " << b->author << " (" << b->isbn << ")\n";
     }
 }
 
 void menu() {
     int choice;
     do {
-        cout << "\n--- Library Management ---\n";
-        cout << "1. Borrow Book\n";
-        cout << "2. Return Book\n";
-        cout << "3. Undo Last Action\n";
-        cout << "4. Search Book\n";
-        cout << "5. Show Books by Genre\n";
-        cout << "6. Recommend Books\n";
-        cout << "7. Exit\n";
+        cout << "\n+----+ Perpus Cihuyy +----+\n";
+        cout << "===========================\n";
+        cout << "|  1. Show All Books      |\n";
+        cout << "|  2. Search Book         |\n";
+        cout << "|  3. Show Book by Genre  |\n";
+        cout << "|  4. Borrow Book         |\n";
+        cout << "|  5. Return Book         |\n";
+        cout << "|  6. Undo Last Action    |\n";
+        cout << "|  7. Recommend Books     |\n";
+        cout << "|  8. Exit                |\n";
+        cout << "===========================\n";
         cout << "Choice: ";
         cin >> choice;
 
         switch (choice) {
-            case 1: borrowBook(); break;
-            case 2: returnBook(); break;
-            case 3: undoLastAction(); break;
-            case 4: searchBook(); break;
-            case 5: showBooksByGenre(); break;
-            case 6: recommendBooks(); break;
-            case 7: cout << "Exiting...\n"; break;
+            case 1: showAllBooks(); break;
+            case 2: searchBook(); break;
+            case 3: showBooksByGenre(); break;
+            case 4: borrowBook(); break;
+            case 5: returnBook(); break;
+            case 6: undoLastAction(); break;
+            case 7: recommendBooks(); break;
+            case 8: cout << "Exiting...\n";
+                    sleep(1);
+                    cout << "Thank You シ\n"; break;
             default: cout << "Invalid choice.\n";
         }
-
-    } while (choice != 7);
+    } while (choice != 8);
 }
 
 int main() {
