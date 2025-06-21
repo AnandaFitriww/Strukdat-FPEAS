@@ -1,0 +1,6 @@
+Draft Revisi 2:
+1. Update database buku, remove dummy
+2. Upgrade single genre -> multiple genres
+3. Fitur search by genre to the point aja
+4. Tambahin fitur ngeliat list buku yang sedang dipinjam
+5. Show all books, search book nampilin genre juga gak?
