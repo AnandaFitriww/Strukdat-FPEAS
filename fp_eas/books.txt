@@ -1,75 +1,30 @@
-Book Title 1,1000000001,Olivia Bennett,Adventure
-Book Title 2,1000000002,Olivia Bennett,Historical
-Book Title 3,1000000003,Tom Harris,Non-Fiction
-Book Title 4,1000000004,Laura King,Mystery
-Book Title 5,1000000005,Alan Walker,Fantasy
-Book Title 6,1000000006,John Smith,Drama
-Book Title 7,1000000007,John Smith,Romance
-Book Title 8,1000000008,Laura King,Non-Fiction
-Book Title 9,1000000009,Tom Harris,Mystery
-Book Title 10,1000000010,Alan Walker,Historical
-Book Title 11,1000000011,Jane Doe,Fantasy
-Book Title 12,1000000012,Emily Johnson,Mystery
-Book Title 13,1000000013,John Smith,Mystery
-Book Title 14,1000000014,Jane Doe,Biography
-Book Title 15,1000000015,Jane Doe,Historical
-Book Title 16,1000000016,Olivia Bennett,Non-Fiction
-Book Title 17,1000000017,Tom Harris,Fantasy
-Book Title 18,1000000018,Michael Brown,Romance
-Book Title 19,1000000019,Michael Brown,Biography
-Book Title 20,1000000020,Tom Harris,Biography
-Book Title 21,1000000021,John Smith,Mystery
-Book Title 22,1000000022,Tom Harris,Science Fiction
-Book Title 23,1000000023,Michael Brown,Science Fiction
-Book Title 24,1000000024,Sarah Connor,Historical
-Book Title 25,1000000025,Michael Brown,Romance
-Book Title 26,1000000026,Chris Lee,Romance
-Book Title 27,1000000027,Emily Johnson,Science Fiction
-Book Title 28,1000000028,Olivia Bennett,Thriller
-Book Title 29,1000000029,John Smith,Romance
-Book Title 30,1000000030,Sarah Connor,Adventure
-Book Title 31,1000000031,Olivia Bennett,Biography
-Book Title 32,1000000032,Chris Lee,Adventure
-Book Title 33,1000000033,Olivia Bennett,Adventure
-Book Title 34,1000000034,Olivia Bennett,Science Fiction
-Book Title 35,1000000035,Olivia Bennett,Fantasy
-Book Title 36,1000000036,John Smith,Non-Fiction
-Book Title 37,1000000037,Laura King,Drama
-Book Title 38,1000000038,Olivia Bennett,Romance
-Book Title 39,1000000039,Michael Brown,Romance
-Book Title 40,1000000040,Sarah Connor,Historical
-Book Title 41,1000000041,Emily Johnson,Romance
-Book Title 42,1000000042,Tom Harris,Non-Fiction
-Book Title 43,1000000043,Sarah Connor,Drama
-Book Title 44,1000000044,Alan Walker,Adventure
-Book Title 45,1000000045,Alan Walker,Adventure
-Book Title 46,1000000046,John Smith,Science Fiction
-Book Title 47,1000000047,Jane Doe,Science Fiction
-Book Title 48,1000000048,Laura King,Science Fiction
-Book Title 49,1000000049,Alan Walker,Thriller
-Book Title 50,1000000050,Alan Walker,Romance
-Book Title 51,1000000051,Sarah Connor,Science Fiction
-Book Title 52,1000000052,Emily Johnson,Science Fiction
-Book Title 53,1000000053,Sarah Connor,Science Fiction
-Book Title 54,1000000054,Tom Harris,Romance
-Book Title 55,1000000055,John Smith,Fantasy
-Book Title 56,1000000056,Chris Lee,Mystery
-Book Title 57,1000000057,Alan Walker,Romance
-Book Title 58,1000000058,Emily Johnson,Thriller
-Book Title 59,1000000059,Sarah Connor,Biography
-Book Title 60,1000000060,Laura King,Drama
-Book Title 61,1000000061,Emily Johnson,Science Fiction
-Book Title 62,1000000062,Laura King,Mystery
-Book Title 63,1000000063,Laura King,Biography
-Book Title 64,1000000064,Michael Brown,Science Fiction
-Book Title 65,1000000065,Chris Lee,Romance
-Book Title 66,1000000066,Alan Walker,Drama
-Book Title 67,1000000067,Sarah Connor,Romance
-Book Title 68,1000000068,Jane Doe,Non-Fiction
-Book Title 69,1000000069,Tom Harris,Non-Fiction
-Book Title 70,1000000070,Laura King,Non-Fiction
-Book Title 71,1000000071,Michael Brown,Historical
-Book Title 72,1000000072,Emily Johnson,Historical
-Book Title 73,1000000073,Alan Walker,Drama
-Book Title 74,1000000074,Laura King,Adventure
-Book Title 75,1000000075,Michael Brown,Fantasy
+Laskar Pelangi,1001,Andrea Hirata,Drama
+Bumi,1002,Tere Liye,Fantasy>Adventure
+Negeri Lima Menara,1003,Ahmad Fuadi,Inspirational>Drama
+Dilan Dia Adalah Dilanku Tahun 1990,1004,Pidi Baiq,Romance>Teen
+Ronggeng Dukuh Paruk,1005,Ahmad Tohari,Historical
+Ayat Ayat Cinta,1006,Habiburrahman El Shirazy,Romance>Religion
+Supernova Ksatria Puteri dan Bintang Jatuh,1007,Dee Lestari,Science Fiction>Romance
+Pulang,1008,Leila S Chudori,Historical>Drama
+Koala Kumal,1009,Raditya Dika,Comedy
+Marmut Merah Jambu,1010,Raditya Dika,Comedy>Romance
+Perahu Kertas,1011,Dee Lestari,Romance
+Rectoverso,1012,Dee Lestari,Drama
+Hujan,1013,Tere Liye,Science Fiction
+Rindu,1014,Tere Liye,Historical
+Bulan,1015,Tere Liye,Fantasy
+Garis Waktu,1016,Fiersa Besari,Romance>Poetry
+Selamat Tinggal,1017,Tere Liye,Drama>Social
+Tentang Kamu,1018,Tere Liye,Mystery
+Sang Pemimpi,1019,Andrea Hirata,Inspirational
+Padang Bulan,1020,Andrea Hirata,Romance
+Cinta Brontosaurus,1021,Raditya Dika,Comedy
+Sebuah Seni untuk Bersikap Bodo Amat,1022,Mark Manson,Self-Help>Psychology
+Filosofi Teras,1023,Henry Manampiring,Self-Help
+Sapiens,1024,Yuval Noah Harari,Non-Fiction>History
+Atomic Habits,1025,James Clear,Self-Help>Productivity
+Rich Dad Poor Dad,1026,Robert T Kiyosaki,Finance
+The Subtle Art of Not Giving a F*ck,1027,Mark Manson,Self-Help
+Berani Tidak Disukai,1028,Ichiro Kishimi,Philosophy>Psychology
+Dunia Sophie,1029,Jostein Gaarder,Philosophy
+Orang Orang Biasa,1030,Andrea Hirata,Drama
